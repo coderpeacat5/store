@@ -1,0 +1,183 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background: linear-gradient(to bottom,  #F3F3E0, #CBDCEB);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    /* border-radius: 10px; */
+}
+
+.logo {
+    background: url('images/logo.png') ;
+    width: 60px;
+    margin-bottom: 20px;
+    animation: logoEntrance 2s ease forwards;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    color: #133E87;
+    margin-bottom: 10px;
+    transform: translateY(20px);
+    animation: logoEntrance 2s ease forwards;
+}
+
+@keyframes logoEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    margin: 20px;
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 11px 15px 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: auto;
+    max-width: 100%;
+    border-collapse: collapse;
+    background-color: #FFFFFF;
+}
+
+thead th {
+    background-color: #133E87; /* Medium Blue for the header */
+    color: #FFFFFF; /* White text */
+    font-weight: bold;
+    padding: 12px;
+    text-align: center;
+    /* border-top-left-radius: 10px; */
+    /* border-top-right-radius: 10px; */
+}
+
+tbody td {
+    padding: 12px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #d1deea; /* Very light Sky Blue for even rows */
+}
+
+/* tbody tr:nth-child(odd) {
+    background-color: #E1F5FE; Light Sky Blue for odd rows
+} */
+
+tbody tr:hover {
+    
+    background-color: #CBDCEB; /* Light Sky Blue on hover */
+    cursor: pointer;
+}
+
+.edit-btn, .delete-btn {
+    text-decoration: none;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.edit-btn {
+    background-color: #4CAF50;
+    opacity: 0.7;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    opacity: 0.7;
+
+}
+.edit-btn:hover, .delete-btn:hover {
+    opacity: 1.2;
+}
+
+@media (max-width: 600px) {
+    thead {
+        display: none;
+    }
+
+    tbody tr {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    tbody td {
+        display: block;
+        text-align: right;
+        padding: 10px;
+        border-top: none;
+        position: relative;
+    }
+
+    tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
+.btn-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #133E87, #608BC1); /* Medium Blue to Sky Blue gradient */
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #133E87, #00509d);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
