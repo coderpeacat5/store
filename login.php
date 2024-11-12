@@ -47,11 +47,12 @@ if (!$result) {
                 <thead>
                     <tr>
                         <th>S.No.</th>
-                        <th>Username</th>
                         <th>Date</th>
                         <th>File No.</th>
                         <th>Item Name</th>
+                        <th>Username</th>
                         <th>Status</th>
+
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -62,10 +63,11 @@ if (!$result) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
                             echo "<td>" . $counter . "</td>";
-                            echo "<td>" . $row['Username'] . "</td>";
+                            
                             echo "<td>" . $row['Date'] . "</td>";
                             echo "<td>" . $row['File No.'] . "</td>";
                             echo "<td>" . $row['Item Name'] . "</td>";
+                            echo "<td>" . $row['Username'] . "</td>";
                             echo "<td>" . $row['Status'] . "</td>";
                             echo "<td><a class=\"edit-btn\" href='edit.php?S_No=" . urlencode($row['S_No']) . "'>🖉</a> | <a class=\"delete-btn\"href='delete.php?S_No=" . urlencode($row['S_No']) . "'>🗑️</a></td>";
                             echo "</tr>";
