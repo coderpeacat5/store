@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="login-type">Login Type </label>
                 <select name="login-type" id="login-type">
                     <option value="user">User</option>
+                    <option value="admin">Admin</option>
                 </select>
 
                 <div class="btn-container">
