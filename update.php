@@ -1,15 +1,13 @@
 <?php
-session_start(); // Start session
+session_start(); 
 
-// Verify if the user is logged in and has the 'admin' role
 if (!isset($_SESSION['username']) || !isset($_SESSION['role']) || strtolower($_SESSION['role']) != 'admin') {
-    header("Location: index.php"); // Redirect to login if not logged in or not an admin
+    header("Location: index.php"); 
     exit();
 }
 
 include 'partials/_dbconnect.php'; // Database connection
 
-// Check if the form is submitted to add a new record
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $date = $_POST['date'];
@@ -17,34 +15,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item_name = $_POST['item_name'];
     $status = $_POST['status'];
 
-    // Prepare the insert SQL query
+    
     $insertSql = "INSERT INTO data_table (Username, Date, `File No.`, `Item Name`, Status) 
                   VALUES (?, ?, ?, ?, ?)";
 
-    // Initialize statement variable to null
     $stmt = $conn->prepare($insertSql);
 
     if ($stmt) {
-        // Bind parameters and execute the query if the statement is prepared correctly
+        
         $stmt->bind_param("sssss", $username, $date, $file_no, $item_name, $status);
 
-        // Execute the query and check if successful
         if ($stmt->execute()) {
             echo "Record added successfully!";
-            header("Location: login.php"); // Redirect back to dashboard after successful insert
+            header("Location: dashboard.php"); 
             exit();
         } else {
             echo "Error adding record: " . $conn->error;
         }
 
-        // Close the statement
         $stmt->close();
     } else {
         echo "Failed to prepare SQL statement.";
     }
 }
 
-$conn->close(); // Close the database connection
+$conn->close(); 
 ?>
 
 <!DOCTYPE html>
@@ -59,9 +54,7 @@ $conn->close(); // Close the database connection
 
 <body>
 
-
     <div class="container">
-        <img src="images/logo.png" alt="drdo logo" class="logo">
         <h2>Add New Record</h2>
 
         <form method="post" action="" class="update-form">
@@ -83,16 +76,10 @@ $conn->close(); // Close the database connection
 
             <div class="btn-container">
             <button type="submit" class="btn">Add</button>
-            <a href="login.php" class="btn">Cancel</a>
+            <a href="dashboard.php" class="btn">Cancel</a>
         </div>
 
-
-
         </form>
-        
-
-        <!-- Link back to the dashboard -->
-
     </div>
 </body>
 

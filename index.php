@@ -1,81 +1,72 @@
 <?php
-session_start();
-$login = false;
-$showError = false;
+include 'partials/_dbconnect.php'; 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include 'partials/_dbconnect.php';
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $role = $_POST['role'];
+$sql = "SELECT `S_No`, `Username`, `Date`, `File No.`, `Item Name`, `Status` FROM data_table";
+$result = mysqli_query($conn, $sql);
 
-    // Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("SELECT username, role FROM users WHERE username = ? AND password = ? AND role = ?");
-    $stmt->bind_param("sss", $username, $password, $role); // Bind the role as well
-    $stmt->execute();
-    $stmt->bind_result($dbUsername, $dbRole);
-    $stmt->fetch();
-
-    // Check if the username, password, and role match
-    if ($dbUsername) {
-        $_SESSION['username'] = $dbUsername;
-        $_SESSION['role'] = $dbRole;
-        header("Location: login.php"); // Redirect to the dashboard
-        exit();
-    } else {
-        echo "<script>
-        alert('Invalid Username, Password, or Role');
-        </script>";
-    }
-
-    $stmt->close();
-    mysqli_close($conn);
+if (!$result) {
+    die("Query failed: " . mysqli_error($conn));
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles/tstyle.css">
 </head>
-
 <body>
-    <div class="container illustration">
-        <!-- Left section -->
-        <div class="login-form">
-            <img src="images/logo.png" alt="drdo logo" class="logo">
-            <h2>Welcome to the Store</h2>
-            <p>Sign into your Account</p>
-
-            <form action="index.php" method="post" id="login-form">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
-
-                <label for="password">Password</label>
-                <input type="text" id="password" name="password" placeholder="Enter your password" required>
-
-                <label for="role">Login Type</label>
-                <select name="role" id="role">
-                    <!-- <option value="user">User</option> -->
-                    <option value="admin">Admin</option>
-                </select>
-
-                <div class="btn-container">
-                    <button type="submit" class="btn">Log In</button>
-                    <a href="signup.php" class="btn">Sign Up</a>
-                </div>
-            </form>
+    <div class="container">
+        <h1>Welcome to the Dashboard</h1>
+        
+        <div class="table-container">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Date</th>
+                        <th>File No.</th>
+                        <th>Item Name</th>
+                        <th>Username</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if (mysqli_num_rows($result) > 0) {
+                        $counter = 1;
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>" . $counter . "</td>";
+                            echo "<td>" . htmlspecialchars($row['Date']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['File No.']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['Item Name']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['Username']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['Status']) . "</td>";
+                            echo "</tr>";
+                            $counter++;
+                        }
+                    } else {
+                        echo "<tr><td colspan='6'>No data available</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
-        <!-- Right section -->
-        <div class="image-section illustration-img">
+        
+        <div class="btn-container">
+            <a href="login.php" class="btn">Edit Record</a>
         </div>
     </div>
 </body>
-
 </html>
+
+<?php
+mysqli_close($conn);
+?>

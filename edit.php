@@ -1,19 +1,18 @@
 <?php
-session_start(); // Start session
+session_start();
 
-// Verify if the user is logged in and has the 'admin' role
+
 if (!isset($_SESSION['username']) || !isset($_SESSION['role']) || strtolower($_SESSION['role']) != 'admin') {
-    header("Location: index.php"); // Redirect to login if not logged in or not an admin
+    header("Location: index.php"); 
     exit();
 }
 
 include 'partials/_dbconnect.php'; // Database connection
 
-// Check if an S.No. parameter is provided in the URL
+
 if (isset($_GET['S_No'])) {
     $s_no = $_GET['S_No'];
 
-    // Fetch the record from the database
     $sql = "SELECT * FROM data_table WHERE `S_No` = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $s_no); // Bind as an integer to prevent SQL injection
@@ -21,7 +20,6 @@ if (isset($_GET['S_No'])) {
     $result = $stmt->get_result();
     $record = $result->fetch_assoc();
 
-    // If no record found, display an error message
     if (!$record) {
         echo "Record not found!";
         exit();
@@ -35,7 +33,6 @@ if (isset($_GET['S_No'])) {
         $item_name = $_POST['item_name'];
         $status = isset($_POST['status']) ? $_POST['status'] : ''; // Default to empty if not set
 
-        // Prepare the update SQL query
         $updateSql = "UPDATE data_table SET 
                         Username = ?, 
                         Date = ?, 
@@ -51,7 +48,7 @@ if (isset($_GET['S_No'])) {
         // Execute the update query and check if successful
         if ($stmt->execute()) {
             echo "Record updated successfully!";
-            header("Location: login.php");
+            header("Location: dashboard.php");
         } else {
             echo "Error updating record: " . $conn->error;
         }
@@ -74,7 +71,6 @@ if (isset($_GET['S_No'])) {
 
 <body>
     <div class="container">
-        <img src="images/logo.png" alt="drdo logo" class="logo">
         <h2>Update Record</h2>
 
         <?php if (isset($record)) { ?>
@@ -100,19 +96,17 @@ if (isset($_GET['S_No'])) {
 
                 <div class="btn-container">
                 <button type="submit" class="btn">Update</button>
-                <a href="login.php" class="btn">Cancel</a>
+                <a href="dashboard.php" class="btn">Cancel</a>
                 </div>
                 
             </form>
         </div>
     <?php } ?>
-
-     <!-- Link back to the dashboard -->
 </body>
 
 </html>
 
 <?php
-$stmt->close(); // Close the statement
-$conn->close(); // Close the database connection
+$stmt->close();
+$conn->close(); 
 ?>
