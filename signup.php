@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container illustration">
         <div class="signup-form">
-            <img src="images/logo.png" alt="drdo logo" class="logo">
+            
             <h2>Sign Up to our Website</h2>
 
             <form action="signup.php" method="post" id="signup-form">

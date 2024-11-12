@@ -63,8 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </form>
         </div>
-        <div class="image-section illustration-img">
-        </div>
+        <div class="image-section illustration-img"></div>
     </div>
 </body>
 </html>

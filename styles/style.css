@@ -1,5 +1,5 @@
 * {
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     margin: 0;
     padding: 0;
 }
@@ -39,7 +39,6 @@ body {
     box-shadow: 13px 14px 8px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     overflow: hidden;
-    background: linear-gradient(to bottom, #89aad3, #FFFFFF);
 }
 
 .container:hover {
@@ -150,9 +149,13 @@ input:focus, select:focus {
 
 .image-section {
     width: 50%;
-    background: url('images/image.png') center center / cover no-repeat;
-    background-color: #FFFFFF;
+    background-image: url('img.png');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #fff;
 }
+
 
 .illustration{
     opacity: 0;
